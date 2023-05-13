@@ -37,19 +37,20 @@ int main(int argc, const char *argv[])
 	int init_method=0;
 
 	///Read command line options
-	int retv = read_options(argc, argv, input_dir, input_ext, filenames,
+	//lo que se le pasa por línea de comandos son opciones de aquí:
+	int retv = read_options(argc, argv, input_dir, input_ext, filenames, //lee los argumentos 
 		nmix, gmm_filename,
 		init_iterations, em_iterations, init_threshold, em_threshold,
 		init_method, verbose);
 	if (retv != 0)
-		return usage(argv[0], retv);
+		return usage(argv[0], retv); //si error se muestra modo de empleo
 
 	//Read data from filenames
 	fmatrix data;
 	read_data(input_dir, input_ext, filenames, data);
 	cout << "DATA: " << data.nrow() << " x " << data.ncol() << endl;
 
-	GMM gmm;
+	GMM gmm;//se define el objeto gmm
 
 	/// \TODO Initialize GMM from data; initially, you should implement random initialization.
 	///
@@ -57,6 +58,7 @@ int main(int argc, const char *argv[])
 	/// initicialization accordingly.
 	switch (init_method) {
 		case 0:
+			gmm.random_init(data,nmix);//
 			break;
 		case 1:
 			break;
@@ -67,7 +69,7 @@ int main(int argc, const char *argv[])
 	}
 
 	/// \TODO Apply EM to estimate GMM parameters (complete the funcion in gmm.cpp)
-
+	gmm.em(data, em_iterations, em_threshold, verbose);
 	//Create directory, if it is needed
 	gmm_filename.checkDir();
 	//Save gmm
