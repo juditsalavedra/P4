@@ -55,19 +55,30 @@ int main(int argc, const char *argv[])
 	///
 	/// Other alternatives are: vq, em_split... See the options of the program and place each
 	/// initicialization accordingly.
+	/// \DONE Inicialización de GMM a partir de data:
+	/// - Random
+	/// - Binary VQ (LBG) -> De momento es la opción por defecto
+	/// - Expectation Maximization
 	switch (init_method) {
 		case 0:
+			gmm.random_init(data, nmix);
 			break;
 		case 1:
+			gmm.vq_lbg(data, nmix, init_iterations, init_threshold, verbose)
 			break;
 		case 2:
+			em_split(data, nmix, init_iterations, init_threshold, verbose) {
 			break;
 		default:
+			gmm.vq_lbg(data, nmix, init_iterations, init_threshold, verbose)
+			break;
 			;
 	}
 
-	/// \TODO Apply EM to estimate GMM parameters (complete the funcion in gmm.cpp)
-
+	/// \TODO Apply EM to estimate GMM parameters (complete the function in gmm.cpp)
+	/// \DONE Invocación al algoritmo EM
+	gmm.em(data, em_iterations, em_threshold, verbose);
+	
 	//Create directory, if it is needed
 	gmm_filename.checkDir();
 	//Save gmm
