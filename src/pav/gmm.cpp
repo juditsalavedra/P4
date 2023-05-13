@@ -112,6 +112,10 @@ namespace upc
 
 		for (n=0; n<data.nrow(); ++n) {
 			/// \TODO Compute the logprob of a single frame of the input data; you can use gmm_logprob() above.
+			/// \DONE Cálculo de la verosimilitud de una secuencia dado el modelo
+			///	Obtención del logaritmo de la verosimilitud de la señal completa  log_p(X|lamda_k)
+			/// - Fórmula = log_p(X|lamda_k) = sum_{i=0}^{N-l} log_p(x_i|lamda_k)
+			lprob += gmm_logprob(data[n]);
 		}
 		return lprob/data.nrow();
 	}
@@ -213,12 +217,38 @@ namespace upc
 			//
 			// Update old_prob, new_prob and inc_prob in order to stop the loop if logprob does not
 			// increase more than inc_threshold.
-			this->em_expectation(data,weights);
-			this->em_maximization(data,weights);
-			//falta implementar el criterio de parada
+			// 
+			/// \DONE Implementación algoritmo EM
+			/// - Obtener la probabilidad new_prob ejecutando la fase Expectation (E). Este valor es 
+			///   el logaritmo de la verosimilitud del conjunto de tramas dado el modelo.
+			/// - Ejecución de la fase Maximization (M). Se usa el reparto valculado en la fase anterior
+			///   (almacenado en weights) para reestimar los parámetros del GMM
+			/// - Calcular el incremento de la probabilidad entre la iteración anterior (old_prob) y la 
+			///   actual (new_prob)
+			/// - Se muestra por el terminal información de la iteración actual como por ejemplo el valor
+			///   de la nueva probabilidad y el valor del incremento que ha habido respecto de la iteración 
+			///   anterior
+			/// - Se establece el criterio de parada: Si el incremento es inferior o igual que el umbral 
+			///   definido por inc_threshold, significa que es despreciable y se deja de iterar. En cambio, 
+			///   si es mayor que el umbral, se debe continuar iterando para alcanzar el óptimo local y, por
+			///   lo tanto, es necesario actualizar el valor de old_prob con la probabilidad obtenida en esta
+			///   última iteración para poder hacer la comparación con la siguiente.
+
+			//New prob is the probability that the data is generated from each mixture
+			new_prob = this->em_expectation(data, weights); 
+			this->em_maximization(data, weights);
+			inc_prob = new_prob-old_prob;
 
 			if (verbose & 01)
 				cout << "GMM nmix=" << nmix << "\tite=" << iteration << "\tlog(prob)=" << new_prob << "\tinc=" << inc_prob << endl;
+
+			//Stopping criterion
+			if(inc_prob <= inc_threshold){
+				break;
+			}else{
+				old_prob = new_prob;
+			}
+
 		}
 		return 0;
 	}

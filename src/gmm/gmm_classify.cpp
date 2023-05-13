@@ -25,9 +25,23 @@ int classify(const vector<GMM> &vgmm, const fmatrix &dat, float &maxlprob)
 	int maxind  = -1;
 	maxlprob = -1e38;
 
-	//TODO Assign maxind to the best index of vgmm calling 'logprob' for each gmm. Implement this function in gmm.cpp
+	/// \TODO Assign maxind to the best index of vgmm calling 'logprob' for each gmm. Implement this function in gmm.cpp
+	///	\DONE Obtención del modelo (locutor) de verosimilitud más alta
+	/// - Creación de un bucle for(): Para cada gmm se calcula la verosimilitud de la secuencia dado un modelo. 
+	///   Seguidamente se compara con el valor máximo obtenido para un modelo anterior para actualizar maxlprob si
+	///	  el obtenido es mayor que el obtenido anteriormente
+	/// - Se obtiene el índice que indica para que gmm del vector vgmm la verosimilitud de secuencia es mayor dado 
+	///	  dicho modelo
+
 	maxind = 0;
 
+	for(long unsigned int i = 0; i<vgmm.size(); ++i){
+		lprob = vgmm[i].logprob(dat);
+		if(lprob>=maxlprob){
+			maxlprob = lprob;
+			maxind = i;	
+		}
+	}
 	return maxind;
 }
 
