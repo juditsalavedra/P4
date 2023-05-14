@@ -23,6 +23,12 @@ name_exp=one
 db_devel=spk_8mu/speecon
 db_test=spk_8mu/sr_test
 
+
+lp_coef=8
+lpcc_coef=8
+mfcc_coef=13
+mfcc_banks=30
+
 # Ficheros de resultados del reconocimiento y verificación
 LOG_CLASS=$w/class_${FEAT}_${name_exp}.log
 LOG_VERIF=$w/verif_${FEAT}_${name_exp}.log
@@ -76,12 +82,35 @@ fi
 # Create your own features with the name compute_$FEAT(), where $FEAT is the name of the feature.
 # - Select (or change) different features, options, etc. Make you best choice and try several options.
 
+
+# de momento no cambiado el 8!!!!!
 compute_lp() {
     db=$1
     shift
     for filename in $(sort $*); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
         EXEC="wav2lp 8 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        echo $EXEC && $EXEC || exit 1
+    done
+}
+
+compute_lpcc() {
+    db=$1
+   # lp_coef=$lp_coef
+   # lpcc_coef=$lpcc_coef
+    shift
+    for filename in $(sort $*); do
+        mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
+        EXEC="wav2lpcc 8 8 $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        echo $EXEC && $EXEC || exit 1
+    done
+}
+compute_mfcc() {
+    db=$1
+    shift
+    for filename in $(sort $*); do
+        mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
+        EXEC="wav2mfcc $mfcc_coef $mfcc_banks $db/$filename.wav $w/$FEAT/$filename.$FEAT"
         echo $EXEC && $EXEC || exit 1
     done
 }
