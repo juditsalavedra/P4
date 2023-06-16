@@ -34,7 +34,7 @@ int main(int argc, const char *argv[])
 	Filename gmm_filename(DEF_GMMFILE);
 	unsigned int init_iterations=DEF_ITERATIONS, em_iterations=DEF_ITERATIONS;
 	float init_threshold=DEF_THR, em_threshold=DEF_THR;
-	int init_method=0;
+	int init_method=1;
 
 	///Read command line options
 	//lo que se le pasa por línea de comandos son opciones de aquí:
@@ -72,7 +72,6 @@ int main(int argc, const char *argv[])
 			break;
 		default:
 			gmm.vq_lbg(data, nmix, init_iterations, init_threshold, verbose);
-			break;
 			
 	}
 

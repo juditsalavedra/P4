@@ -4,7 +4,7 @@
 set -o pipefail
 
 ## \file
-## \TODO This file implements a very trivial feature extraction; use it as a template for other front ends.
+## \DONE This file implements a very trivial feature extraction; use it as a template for other front ends.
 ## 
 ## Please, read SPTK documentation and some papers in order to implement more advanced front ends.
 
@@ -46,7 +46,7 @@ fi
 
 # Main command for feature extration
 sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 |
-	$LPC -l 240 -m $lpc_order | $LPC2C -m $lpc_order -M $cep_order > $base.lpcc || exit 1
+   $LPC -l 240 -m $lpc_order | $LPC2C -m $lpc_order -M $cep_order > $base.lpcc || exit 1
    
 
 # Our array files need a header with the number of cols and rows:

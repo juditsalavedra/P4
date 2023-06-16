@@ -4,7 +4,7 @@
 set -o pipefail
 
 ## \file
-## \TODO This file implements a very trivial feature extraction; use it as a template for other front ends.
+## \DONE This file implements a very trivial feature extraction; use it as a template for other front ends.
 ## 
 ## Please, read SPTK documentation and some papers in order to implement more advanced front ends.
 
@@ -21,7 +21,7 @@ if [[ $# != 4 ]]; then
    echo "$0 mfcc_order mfcc_banks input.wav output.lp"
    exit 1
 fi
-# número de coeficientes Q = 13
+# número de coeficientes Q 
 # número de filtros de 24 a 40
 mfcc_order=$1
 mfcc_banks=$2
@@ -45,14 +45,15 @@ fi
 
 # Main command for feature extration
 #Cuanto más grande la frecuencia de muestreo menor el error si no se pone nada --> 16kHz
-#-a 1 (sin preenfasis de momento)
+# -a 1 (sin preenfasis de momento)
 # -w 1 porque señal ya enventanada Blackman--> probar a no enventanar antes y usar Hamming
 sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | 
 	$MFCC -s 8 -l 240 -m $mfcc_order -n $mfcc_banks > $base.mfcc || exit 1
+
 #-w 1 
 #$WINDOW -l 240 -L 240 |
 # Our array files need a header with the number of cols and rows:
-ncol=$((mfcc_order+1)) # lpc p =>  (gain a1 a2 ... ap) 
+ncol=$((mfcc_order)) # mfcc p =>  (c0 c1 ... cp-1) 
 nrow=`$X2X +fa < $base.mfcc | wc -l | perl -ne 'print $_/'$ncol', "\n";'`
 
 # Build fmatrix file by placing nrow and ncol in front, and the data after them
