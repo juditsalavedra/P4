@@ -25,11 +25,11 @@ db_devel=spk_8mu/speecon
 db_test=spk_8mu/sr_test
 world=users_and_others
 
-
+LP_coef=20
 lp_coef=25
 lpcc_coef=25
-mfcc_coef=20
-mfcc_banks=33
+mfcc_coef=13
+mfcc_banks=40
 
 # Ficheros de resultados del reconocimiento y verificación
 LOG_CLASS=$w/class_${FEAT}_${name_exp}.log
@@ -90,7 +90,7 @@ compute_lp() {
     shift
     for filename in $(sort $*); do
         mkdir -p `dirname $w/$FEAT/$filename.$FEAT`
-        EXEC="wav2lp $lp_coef $db/$filename.wav $w/$FEAT/$filename.$FEAT"
+        EXEC="wav2lp $LP_coef $db/$filename.wav $w/$FEAT/$filename.$FEAT"
         echo $EXEC && $EXEC || exit 1
     done
 }
@@ -142,7 +142,7 @@ for cmd in $*; do
        for dir in $db_devel/BLOCK*/SES* ; do
            name=${dir/*\/}
            echo $name ----
-           EXEC="gmm_train -v 255 -T 0.001 -N 64 -m 32 -i 2 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
+           EXEC="gmm_train -v 255 -T 0.0005 -N 30 -m 40 -i 2 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$name.gmm $lists/class/$name.train"
            echo $EXEC && $EXEC || exit 1
            echo
        done
@@ -169,7 +169,7 @@ for cmd in $*; do
        #
        # - The name of the world model will be used by gmm_verify in the 'verify' command below.
        # \DONE Falta cambiar valores
-       EXEC="gmm_train -v 255 -T 0.001 -N 64 -m 32 -i 2 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train"
+       EXEC="gmm_train -v 255 -T 0.0005 -N 30 -m 40 -i 1 -d $w/$FEAT -e $FEAT -g $w/gmm/$FEAT/$world.gmm $lists/verif/$world.train"
        echo $EXEC && $EXEC || exit 1
 
    elif [[ $cmd == verify ]]; then

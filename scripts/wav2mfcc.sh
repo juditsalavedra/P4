@@ -47,8 +47,8 @@ fi
 #Cuanto más grande la frecuencia de muestreo menor el error si no se pone nada --> 16kHz
 # -a 1 (sin preenfasis de momento)
 # -w 1 porque señal ya enventanada Blackman--> probar a no enventanar antes y usar Hamming
-sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 | 
-	$MFCC -w 1 -s 8 -l 240 -m $mfcc_order -n $mfcc_banks > $base.mfcc || exit 1
+sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | 
+	$MFCC -s 8 -l 240 -m $mfcc_order -n $mfcc_banks > $base.mfcc || exit 1
 
 #-w 1 
 #$WINDOW -l 240 -L 240 |
