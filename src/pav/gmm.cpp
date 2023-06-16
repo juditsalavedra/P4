@@ -238,16 +238,16 @@ namespace upc
 			new_prob = this->em_expectation(data, weights); 
 			this->em_maximization(data, weights);
 			inc_prob = new_prob-old_prob;
-
-			if (verbose & 01)
-				cout << "GMM nmix=" << nmix << "\tite=" << iteration << "\tlog(prob)=" << new_prob << "\tinc=" << inc_prob << endl;
-
+			
 			//Stopping criterion
-			if(inc_prob <= inc_threshold){
+			if(inc_prob < inc_threshold){
 				break;
 			}else{
 				old_prob = new_prob;
 			}
+
+			if (verbose & 01)
+				cout << "GMM nmix=" << nmix << "\tite=" << iteration << "\tlog(prob)=" << new_prob << "\tinc=" << inc_prob << endl;
 
 		}
 		return 0;

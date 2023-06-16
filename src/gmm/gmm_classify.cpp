@@ -32,10 +32,11 @@ int classify(const vector<GMM> &vgmm, const fmatrix &dat, float &maxlprob)
 	///	  el obtenido es mayor que el obtenido anteriormente
 	/// - Se obtiene el índice que indica para que gmm del vector vgmm la verosimilitud de secuencia es mayor dado 
 	///	  dicho modelo
+	maxind = 0;
 
 	for(long unsigned int i = 0; i<vgmm.size(); ++i){
 		lprob = vgmm[i].logprob(dat);
-		if(lprob>=maxlprob){
+		if(lprob>maxlprob){
 			maxlprob = lprob;
 			maxind = i;	
 		}
