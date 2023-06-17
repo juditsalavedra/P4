@@ -80,18 +80,19 @@ En el programa escribimos `$LPC -l 240 -m $lpc_order > $base.lp`
   ![image](https://github.com/juditsalavedra/P4/assets/125377500/e9809c3d-832b-479b-bf15-dc13cd634e31)
   El procedimiento seguido en estas líneas de código es el siguiente:
     - Obtener el número de columnas `ncol` mediante la suma del orden de los coeficientes más 1 de la ganancia.
-    - `$X2X +fa < $base.lp`: Los datos de `base.lp` se convierten mediante el programa x2x de float a texto (ASCII) y se redirige la salida mediante el *pipeline*.
-    - `wc -l`: Se cuentan las líneas de la información introducida con este comando de UNIX.
-    - `perl -ne 'print $_/'$ncol', "\n";'`: Utilizando un *pipeline* se introduce lo anterior en el comando perl, con el que se procesa la entrada y se realiza una operación aritmética. La opción `-ne` indica que se lee la entrada línea por línea. Luego, se imprime cada línea dividida por el valor de la variable $ncol y seguido de un salto de línea: `'print $_/'$ncol', "\n"`. Este resultado se le asigna a la variable `nrow`.
+    - Obtener el número de filas, que es igual al número de tramas, como esto depende la longitud de la señal, la longitud y desplazamiento de la ventana y la cadena
+de comandos que se ejecutan para obtener la parametrización es mejor extraer esa información del fichero obtenido:
+      - `$X2X +fa < $base.lp`: Los datos de `base.lp` se convierten mediante el programa x2x de float a texto (ASCII) y se redirige la salida mediante el *pipeline*.
+      - `wc -l`: Se cuentan las líneas de la información introducida con este comando de UNIX.
+      - `perl -ne 'print $_/'$ncol', "\n";'`: Utilizando un *pipeline* se introduce lo anterior en el comando perl, con el que se procesa la entrada y se realiza una operación aritmética. La opción `-ne` indica que se lee la entrada línea por línea. Luego, se imprime cada línea dividida por el valor de la variable $ncol y seguido de un salto de línea: `'print $_/'$ncol', "\n"`. Este resultado se le asigna a la variable `nrow`.
     - Se construye la matriz *fmatrix* colocando el número de columnas y filas delante (la cabecera) y los datos después:
     - `echo $nrow $ncol`: Se imprimen los valores de las variables `$nrow` y `$ncol`. Estos valores se pasarán como entrada para el siguiente comando.
     - `$X2X +aI`:El comando $X2X con la opción `+aI`convierte la entrada de texto a números de tipo *unsigned int* (4 bytes).
-    - `> $outputfile`: Utiliza el símbolo > para redirigir la salida del comando anterior y guardarla en el archivo especificado en la variable $outputfile.
+     - `> $outputfile`: Utiliza el símbolo > para redirigir la salida del comando anterior y guardarla en el archivo especificado en la variable $outputfile.
     - `cat $base.lp >> $outputfile`: Utiliza el comando cat para concatenar el contenido del archivo `$base.lp` y agregarlo al final del `$outputfile` utilizando el operador de redirección >>. 
-   
-
 
   * ¿Por qué es más conveniente el formato *fmatrix* que el SPTK?
+  Porque a partir de esta matriz podemos ver el número de filas (tramas) y el número de columnas (ganancia + coeficientes en el caso de `wav2lp.sh`) de forma ordenada. En cada fila se muestra entre corchetes el número de trama y cada columna tiene un coeficiente (o la ganancia en la primera columna).
 
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
