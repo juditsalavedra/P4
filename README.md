@@ -97,8 +97,19 @@ de comandos que se ejecutan para obtener la parametrización es mejor extraer es
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales de predicción lineal
   (LPCC) en su fichero <code>scripts/wav2lpcc.sh</code>:
 
+```ruby
+  # Main command for feature extration
+sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | $WINDOW -l 240 -L 240 |
+   $LPC -l 240 -m $lpc_order | $LPC2C -m $lpc_order -M $cep_order > $base.lpcc || exit 1
+```
+
 - Escriba el *pipeline* principal usado para calcular los coeficientes cepstrales en escala Mel (MFCC) en su
   fichero <code>scripts/wav2mfcc.sh</code>:
+```ruby
+  # Main command for feature extration
+sox $inputfile -t raw -e signed -b 16 - | $X2X +sf | $FRAME -l 240 -p 80 | 
+	$MFCC -s 8 -l 240 -m $mfcc_order -n $mfcc_banks > $base.mfcc || exit 1
+ ```
 
 ### Extracción de características.
 
@@ -126,6 +137,11 @@ Complete el código necesario para entrenar modelos GMM.
 
 - Inserte una gráfica que muestre la función de densidad de probabilidad modelada por el GMM de un locutor
   para sus dos primeros coeficientes de MFCC.
+
+
+
+  ![image](https://github.com/juditsalavedra/P4/assets/125377500/27884f7b-d587-4aae-8797-a0c0451b7cc3)
+
 
 - Inserte una gráfica que permita comparar los modelos y poblaciones de dos locutores distintos (la gŕafica
   de la página 20 del enunciado puede servirle de referencia del resultado deseado). Analice la capacidad
