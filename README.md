@@ -33,8 +33,113 @@ ejercicios indicados.
   principal (`sox`, `$X2X`, `$FRAME`, `$WINDOW` y `$LPC`). Explique el significado de cada una de las 
   opciones empleadas y de sus valores.
 
+  El script `wav2lp.sh` realiza la parametrización de una señal de voz usando coeficientes de predicción lineal. 
+
+    - `sox`: "Sound eXchange" es una herramienta para realizar conversiones y manipulaciones de archivos de audio.
+       Invocamos este comando con las siguientes opciones: `sox $inputfile -t raw -e signed -b 16 -`.
+
+        - `-t raw`: Transformamos el fichero de entrada de tipo WAV a formato raw:
+          
+           ![image](https://github.com/juditsalavedra/P4/assets/125377500/dcf8337c-dfce-4cfe-8709-0be359ee03e9)
+
+
+        - `-e signed`: Indicamos el tipo de codificación que queremos aplicar, en nuestro caso **signed integer**:
+          
+           ![image](https://github.com/juditsalavedra/P4/assets/125377500/d3438b1e-9a09-4c59-bd39-46c6e8554846)
+
+
+        - `-b 16`: Establecemos el tamaño en bits de cada muestra de la codificación:
+          
+           ![image](https://github.com/juditsalavedra/P4/assets/125377500/1981bc86-885d-41ae-b100-784326dffdcd)
+
+
+        - `-`: Envía el output a la salida estándar y para realiza una redirección al *pipeline*.
+  
+
+  En resumen, con esta instrucción estamos convirtiendo el fichero de audio WAVE a un formato raw de enteros de
+  16 bits. Esta conversión es necesaria para emplear el programa x2x de SPKT.
+    
+   - `$X2X`: Este argumento contiene la invocación de x2x, el programa de SPTK que permite la conversión entre
+      distintos formatos de  datos:
+     
+      ![image](https://github.com/juditsalavedra/P4/assets/125377500/c2f38d38-3760-480c-ac3b-c051ebcfd7db)
+
+
+    En nuestro programa se introduce la salida de la instrucción anterior en la siguiente (`X2X +sf`) mediante un *pipeline*.
+  
+      - `+sf`: Con esta opción se indica que el tipo de entrada es short (2 bytes = 16 bits) y se establece la salida de tipo
+        float (4 bytes = 32 bits).
+
+    ![image](https://github.com/juditsalavedra/P4/assets/125377500/618678b8-5f07-48b9-bf71-f37f2d45dbea)
+
+
+    - `$FRAME`: Este argumento contiene la llamada a la función *frame* de SPTK que divide el stream de entrada en tramas.
+      
+      ![image](https://github.com/juditsalavedra/P4/assets/125377500/e7ab94e4-0b4b-4449-ba2e-7338a3114b7d)
+
+
+        - `-l`: Establece el número de muestras de cada trama.
+        - `-p`: Indica el periodo de las tramas, es decir, cuántas muestras está desplazada la trama respecto de la anterior.
+
+        Los valores utilizados en el script son los siguientes: `$FRAME -l 240 -p 80`
+
+    - `$WINDOW`: Este argumento contiene la llamada a la función *window* de SPTK que aplica una ventana a cada trama.
+    
+    ![image](https://github.com/juditsalavedra/P4/assets/125377500/38ee5660-d8e4-4eeb-92e3-e906800370c1)
+
+
+        Los valores utilizados en el script son los siguientes: `$WINDOW -l 240 -L 240`.
+          - `-l`: Longitud de las tramas de entrada.
+          - `-L`: Longitud de las tramas de salida.
+     
+    En nuestro caso, la longitud de las tramas de entrada y de salida es la misma (240 muestras). Como no aplicamos ninguna
+    otra opción, la ventana por defecto es la Blackman.
+  
+    ![image](https://github.com/juditsalavedra/P4/assets/125377500/18ebb45e-4c95-4749-b7c6-16dd37fcc401)
+
+
+    - `$LPC`: Este argumento contiene la llamada a la función *lpc* de SPTK que calcula los coeficientes de predicción lineal
+       de las tramas  enventanadas de datos que se pasan como entrada a través del *pipeline*.
+
+      ![image](https://github.com/juditsalavedra/P4/assets/125377500/e31f9235-c5ce-45c0-8654-f04029e95948)
+      
+        En el programa escribimos `$LPC -l 240 -m $lpc_order > $base.lp`
+         - `-l`: Longitud de la trama. En nuestro caso 240 muestras.
+         - `-m`: Orden de los coeficientes LPC.
+         - Mediante `lpc_order > $base.lp` redirigimos la salida a un fichero con extensión *.lp*.
+
+
+
 - Explique el procedimiento seguido para obtener un fichero de formato *fmatrix* a partir de los ficheros de
   salida de SPTK (líneas 45 a 51 del script `wav2lp.sh`).
+  
+  ![image](https://github.com/juditsalavedra/P4/assets/125377500/e9809c3d-832b-479b-bf15-dc13cd634e31)
+
+  
+  El procedimiento seguido en estas líneas de código es el siguiente:
+    1. Obtener el número de columnas `ncol` mediante la suma del orden de los coeficientes más 1 de la ganancia.
+       
+    2. `$X2X +fa < $base.lp`: Los datos de `base.lp` se convierten mediante el programa x2x de float a texto (ASCII)
+        y se redirige la salida mediante el *pipeline*.
+       
+    3. `wc -l`: Se cuentan las líneas de la información introducida con este comando de UNIX.
+       
+    4. `perl -ne 'print $_/'$ncol', "\n";'`: Utilizando un *pipeline* se introduce lo anterior en el comando perl, con
+        el que se procesa la entrada y se realiza una operación aritmética. La opción `-ne` indica que se lee la entrada
+        línea por línea. Luego, se imprime cada línea dividida por el valor de la variable $ncol y seguido de un salto de
+        línea: `'print $_/'$ncol', "\n"`. Este resultado se le asigna a la variable `nrow`.
+       
+    5. Se construye la matriz *fmatrix* colocando el número de columnas y filas delante (la cabecera) y los datos después:
+        - `echo $nrow $ncol`: Se imprimen los valores de las variables `$nrow` y `$ncol`. Estos valores se pasarán como
+           entrada para el siguiente comando.
+       
+        - `$X2X +aI`:El comando $X2X con la opción `+aI`convierte la entrada de texto a números de tipo *unsigned int* (4 bytes).
+          
+        - `> $outputfile`: Utiliza el símbolo > para redirigir la salida del comando anterior y guardarla en el archivo
+           especificado en la variable $outputfile.
+       
+        - `cat $base.lp >> $outputfile`: Utiliza el comando cat para concatenar el contenido del archivo `$base.lp` y agregarlo
+           al final del `$outputfile` utilizando el operador de redirección >>. 
 
   * ¿Por qué es más conveniente el formato *fmatrix* que el SPTK?
 
