@@ -192,15 +192,18 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
   1. LP:
      <img width="422" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/71ca8e5b-0e48-4741-8727-23adc88e08ca">
 
-  3. LPCC
+  3. LPCC:
+     <img width="436" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/86c57aab-df74-44af-ae9f-84b2400949b5">
      
-  5. MFCC
+  5. MFCC:
+     <img width="433" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/9f1cb3ab-0b71-4afe-837a-d9c0270360e4">
+
  
   A continuación se muestra una tabla resumen con los resultados obtenidos en la tarea de reconocimiento de locutor:
 
-  |             |   LP   | LPCC | MFCC |
-  |-------------|:------:|:----:|:----:|
-  | error_rate  | 8.03 % |      |      |
+  |             |   LP   |  LPCC  |  MFCC  |
+  |-------------|:------:|:------:|:------:|
+  | error_rate  | 8.03 % | 0.38 % | 1.27 % |
   
 ### Verificación del locutor.
 
@@ -216,9 +219,21 @@ Complete el código necesario para realizar verificación del locutor y optimice
        <img width="356" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/895dc83c-12ad-47c3-a369-fd538bda1eae">
 
     3. LPCC:
-    4. MFCC:
+       <img width="347" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/a6eb2675-9431-48c8-b3ec-b8834f5c443b">
+
+    5. MFCC:
  
-  La parametrización con la que mejor resultado hemos obtenido en la tarea de reconocimiento es con LPCC:  
+  La parametrización con la que mejor resultado hemos obtenido en la tarea de reconocimiento es con LPCC:
+  
+    |                |        LPCC        |  
+    |----------------|:------------------:|
+    | umbral óptimo  |  0.222847099691007 |
+    |----------------|:------------------:|
+    | falsas alarmas |  0 (0/1000)        |
+    |----------------|:------------------:|
+    | pérdidas       |  0.04 (10/250)     |
+    |----------------|:------------------:|
+    | score          |  4.0               |  
  
 ### Test final
 
