@@ -224,7 +224,7 @@ for cmd in $*; do
        # candidato para la señal a verificar. En $FINAL_VERIF se pide que la tercera columna sea 1,
        # si se considera al candidato legítimo, o 0, si se considera impostor. Las instrucciones para
        # realizar este cambio de formato están en el enunciado de la práctica.
-       #compute_$FEAT $db_test $lists/final/verif.test 
+
        compute_$FEAT $db_test $lists/final/verif.test 
        EXEC="gmm_verify -w $world -d $w/$FEAT -e $FEAT -D $w/gmm/$FEAT -E gmm lists/final/verif.users lists/final/verif.test lists/final/verif.test.candidates"
        echo $EXEC && $EXEC | tee $TEMP_VERIF
@@ -234,7 +234,7 @@ for cmd in $*; do
         ## LPCC
         ## MFCC
        perl -ane 'print "$F[0]\t$F[1]\t";
-        if ($F[2] > 1.539738863151) {print "1\n"}  
+        if ($F[2] > 0.222847099691007) {print "1\n"}  
         else {print "0\n"}' $TEMP_VERIF | tee $FINAL_VERIF
    
    # If the command is not recognize, check if it is the name
