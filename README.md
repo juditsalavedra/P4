@@ -143,6 +143,7 @@ ejercicios indicados.
 
 
   * ¿Por qué es más conveniente el formato *fmatrix* que el SPTK?
+
     Porque a partir de esta matriz podemos ver el número de filas (tramas) y el número de columnas (ganancia + coeficientes en el
     caso de `wav2lp.sh`) de forma ordenada. En cada fila se muestra entre corchetes el número de trama y cada columna tiene un
     coeficiente (o la ganancia en la primera columna).
