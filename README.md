@@ -190,12 +190,15 @@ Complete el código necesario para realizar reconociminto del locutor y optimice
   Después de optimizar los parámetros, hemos obtenido las siguientes tasas de error:
 
   1. LP:
+     
      <img width="422" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/71ca8e5b-0e48-4741-8727-23adc88e08ca">
 
   3. LPCC:
+     
      <img width="436" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/86c57aab-df74-44af-ae9f-84b2400949b5">
      
   5. MFCC:
+     
      <img width="433" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/9f1cb3ab-0b71-4afe-837a-d9c0270360e4">
 
  
@@ -216,12 +219,17 @@ Complete el código necesario para realizar verificación del locutor y optimice
 
   En la tarea de verificación, la tabla *score* obtenida con los parámetros optimizados es:
     1. LP:
+       
        <img width="356" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/895dc83c-12ad-47c3-a369-fd538bda1eae">
 
     3. LPCC:
+       
        <img width="347" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/a6eb2675-9431-48c8-b3ec-b8834f5c443b">
 
     5. MFCC:
+       
+       <img width="341" alt="image" src="https://github.com/juditsalavedra/P4/assets/127085765/4e49da22-ba08-47d3-acdc-02110c90c5c6">
+
  
   La parametrización con la que mejor resultado hemos obtenido en la tarea de reconocimiento es con LPCC:
   
