@@ -236,11 +236,8 @@ Complete el código necesario para realizar verificación del locutor y optimice
     |                |        LPCC        |  
     |----------------|:------------------:|
     | umbral óptimo  |  0.222847099691007 |
-    |----------------|:------------------:|
     | falsas alarmas |  0 (0/1000)        |
-    |----------------|:------------------:|
     | pérdidas       |  0.04 (10/250)     |
-    |----------------|:------------------:|
     | score          |  4.0               |  
  
 ### Test final
