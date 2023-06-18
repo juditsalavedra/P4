@@ -267,11 +267,12 @@ Complete el código necesario para entrenar modelos GMM.
      - GMM: SES014
      - LOC: SES015
        
-       ![image](https://github.com/juditsalavedra/P4/assets/125377500/3c815034-f09e-4456-b01c-dd99e30e34a5)
+     ![image](https://github.com/juditsalavedra/P4/assets/125377500/3c815034-f09e-4456-b01c-dd99e30e34a5)
+
      - GMM: SES015
      - LOC: SES014
        
-       ![image](https://github.com/juditsalavedra/P4/assets/125377500/a067708e-9a20-49d5-b728-c3572d3becf5)
+     ![image](https://github.com/juditsalavedra/P4/assets/125377500/a067708e-9a20-49d5-b728-c3572d3becf5)
 
 	Podemos observar que los modemos de GMM no se ajustan correctamente a las tramas del locutor que no le corresponde. Principalmente se observa que no están bien centrados los modelos respecto a la acumulación principal de tramas.
 
