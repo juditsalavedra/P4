@@ -171,20 +171,65 @@ ejercicios indicados.
 - Inserte una imagen mostrando la dependencia entre los coeficientes 2 y 3 de las tres parametrizaciones
   para todas las señales de un locutor.
   
+	- LP:
+   
+   	![image](https://github.com/juditsalavedra/P4/assets/125377500/6ded9e3c-1bb0-44aa-9f34-2b5b390b8460)
+  
+	- LPCC:
+   
+   	![image](https://github.com/juditsalavedra/P4/assets/125377500/f3b4e436-fcc3-42d6-bbda-bbdffb16424c)
+
+       
+
+	- MFCC:
+   
+	![image](https://github.com/juditsalavedra/P4/assets/125377500/6a100497-6390-4c51-9faf-338117cc3e2c)
+
+
+  
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
+
+   Creamos el script <a href="scripts/plot_coef.py">plot_coef.py</a> a partir de `plot_gmm_feat`, simplificándolo para que no muestre el modelo GMM y se añade un título apropiado para las gráficas.
+    
+    Las órdenes necesarias son las siguientes:
+    
+    - Para el caso de los coeficientes LP:
+      ![image](https://github.com/juditsalavedra/P4/assets/125377500/31b61e7c-b739-44a5-bf1b-9eb29c9356e0)
+
+    - Para el caso de los coeficientes LPCC:
+       ![image](https://github.com/juditsalavedra/P4/assets/125377500/894247d6-38ed-44c3-bb34-4100a500a37f)
+      
+    - Para el caso de los coeficientes MFCC:
+      ![image](https://github.com/juditsalavedra/P4/assets/125377500/3a83d5b6-fd51-4c5e-bd72-741e4b7041cb)
+
+      
   + ¿Cuál de ellas le parece que contiene más información?
+    
+    Parece que contiene más información la gráfica de MFCC puesto que hay una mayor incorrelación, es decir, no se observa una dependencia entre el coeficiente 2 y 3. Sin embargo, para el caso de LP, la gráfica es más parecida a una recta (hay dependencia).
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
 
   |                        | LP   | LPCC | MFCC |
   |------------------------|:----:|:----:|:----:|
-  | &rho;<sub>x</sub>[2,3] |      |      |      |
+  | &rho;<sub>x</sub>[2,3] |-0.758471    | 0.178515     | -0.048702     |
+
+  ![image](https://github.com/juditsalavedra/P4/assets/125377500/8c00fd9c-8772-4c29-9d9d-36d6ab820d65)
+  ![image](https://github.com/juditsalavedra/P4/assets/125377500/9c5fe229-05c7-4969-8c7a-5e4874176412)
+  ![image](https://github.com/juditsalavedra/P4/assets/125377500/ba13986a-87cf-46d9-9201-b82742a2c209)
+
+
+
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
+    
+  Los resultados confirman lo que habíamos previsto en las gráficas, los coeficientes MFCC están más incorrelados, seguidos de los LPCC y, por último, los LP tienen una  mayor dependencia.
   
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
+  
+  Para el cálculo de los coeficientes LPCC se utiliza orden 25 (lpcc_coef=25), que es el valor por defecto en SPTK y para el cálculo de los MFCC se usa orden 13 (mfcc_coef=13), valor óptimo en reconocimiento de voz. El número de filtros óptimo va de 24 a 40 y, en nuestro caso, hemos usado 40 (mfcc_banks=40).
+  
 
 ### Entrenamiento y visualización de los GMM.
 
@@ -192,17 +237,45 @@ Complete el código necesario para entrenar modelos GMM.
 
 - Inserte una gráfica que muestre la función de densidad de probabilidad modelada por el GMM de un locutor
   para sus dos primeros coeficientes de MFCC.
-
-
-
-    ![image](https://github.com/juditsalavedra/P4/assets/125377500/27884f7b-d587-4aae-8797-a0c0451b7cc3)
-
-
+  En este caso los coeficientes MFCC comienzan por el
   
+  Se muestra la función de densidad de probabilidad modelada por el GMM del locutor 014:
+
+   ![image](https://github.com/juditsalavedra/P4/assets/125377500/1bb9f8d9-590c-4d2f-be65-11fcf1059b02)
+
+  ![image](https://github.com/juditsalavedra/P4/assets/125377500/6545fb2e-1670-4cc7-9758-c14a0df1a972)
+
+  *Se ha modificado el script para incluir por defecto la región del 99% de la masa de probabilidad, además de la región del 50% y el 90% para los GMM.*
+
+
+
 
 - Inserte una gráfica que permita comparar los modelos y poblaciones de dos locutores distintos (la gŕafica
   de la página 20 del enunciado puede servirle de referencia del resultado deseado). Analice la capacidad
   del modelado GMM para diferenciar las señales de uno y otro.
+
+  Comparamos el modelo del locutor 014 y del 015. El locutor 014 lo mostramos en azul, tanto el modelo como las poblaciones y el locutor 015 lo mostramos en rojo.
+  
+     - GMM: SES014
+     - LOC: SES014
+       
+     ![image](https://github.com/juditsalavedra/P4/assets/125377500/4dc3b9e9-f0ae-4634-acc2-c613dce6b514)
+     - GMM: SES015
+     - LOC: SES015
+       
+     ![image](https://github.com/juditsalavedra/P4/assets/125377500/7fc749bb-e001-4926-aa95-a25409cff717)
+     - GMM: SES014
+     - LOC: SES015
+       
+       ![image](https://github.com/juditsalavedra/P4/assets/125377500/3c815034-f09e-4456-b01c-dd99e30e34a5)
+     - GMM: SES015
+     - LOC: SES014
+       
+       ![image](https://github.com/juditsalavedra/P4/assets/125377500/a067708e-9a20-49d5-b728-c3572d3becf5)
+
+	Podemos observar que los modemos de GMM no se ajustan correctamente a las tramas del locutor que no le corresponde. Principalmente se observa que no están bien centrados los modelos respecto a la acumulación principal de tramas.
+
+
 
 ### Reconocimiento del locutor.
 
