@@ -343,6 +343,7 @@ Complete el código necesario para realizar verificación del locutor y optimice
   correspondientes a la evaluación *ciega* final.
 
 	[class_test.log](https://github.com/juditsalavedra/P4/blob/Garc%C3%ADa_Salavedra/work/class_test.log)
+
 	[verif_test.log](https://github.com/juditsalavedra/P4/blob/Garc%C3%ADa_Salavedra/work/verif_test.log)
 
   
