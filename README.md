@@ -65,17 +65,17 @@ ejercicios indicados.
       ![image](https://github.com/juditsalavedra/P4/assets/125377500/c2f38d38-3760-480c-ac3b-c051ebcfd7db)
 
 
-    En nuestro programa se introduce la salida de la instrucción anterior en la siguiente (`X2X +sf`) mediante un *pipeline*.
+    	En nuestro programa se introduce la salida de la instrucción anterior en la siguiente (`X2X +sf`) mediante un *pipeline*.
   
-      - `+sf`: Con esta opción se indica que el tipo de entrada es short (2 bytes = 16 bits) y se establece la salida de tipo
-        float (4 bytes = 32 bits).
+      	- `+sf`: Con esta opción se indica que el tipo de entrada es short (2 bytes = 16 bits) y se establece la salida de tipo
+       	 float (4 bytes = 32 bits).
 
-    ![image](https://github.com/juditsalavedra/P4/assets/125377500/618678b8-5f07-48b9-bf71-f37f2d45dbea)
+    	![image](https://github.com/juditsalavedra/P4/assets/125377500/618678b8-5f07-48b9-bf71-f37f2d45dbea)
 
 
     - `$FRAME`: Este argumento contiene la llamada a la función *frame* de SPTK que divide el stream de entrada en tramas.
       
-      ![image](https://github.com/juditsalavedra/P4/assets/125377500/e7ab94e4-0b4b-4449-ba2e-7338a3114b7d)
+       ![image](https://github.com/juditsalavedra/P4/assets/125377500/e7ab94e4-0b4b-4449-ba2e-7338a3114b7d)
 
 
         - `-l`: Establece el número de muestras de cada trama.
@@ -85,23 +85,23 @@ ejercicios indicados.
 
     - `$WINDOW`: Este argumento contiene la llamada a la función *window* de SPTK que aplica una ventana a cada trama.
     
-    ![image](https://github.com/juditsalavedra/P4/assets/125377500/38ee5660-d8e4-4eeb-92e3-e906800370c1)
+      ![image](https://github.com/juditsalavedra/P4/assets/125377500/38ee5660-d8e4-4eeb-92e3-e906800370c1)
 
 
         Los valores utilizados en el script son los siguientes: `$WINDOW -l 240 -L 240`.
           - `-l`: Longitud de las tramas de entrada.
           - `-L`: Longitud de las tramas de salida.
      
-    En nuestro caso, la longitud de las tramas de entrada y de salida es la misma (240 muestras). Como no aplicamos ninguna
+  		En nuestro caso, la longitud de las tramas de entrada y de salida es la misma (240 muestras). Como no aplicamos ninguna
     otra opción, la ventana por defecto es la Blackman.
   
-    ![image](https://github.com/juditsalavedra/P4/assets/125377500/18ebb45e-4c95-4749-b7c6-16dd37fcc401)
+   	 	![image](https://github.com/juditsalavedra/P4/assets/125377500/18ebb45e-4c95-4749-b7c6-16dd37fcc401)
 
 
     - `$LPC`: Este argumento contiene la llamada a la función *lpc* de SPTK que calcula los coeficientes de predicción lineal
        de las tramas  enventanadas de datos que se pasan como entrada a través del *pipeline*.
 
-      ![image](https://github.com/juditsalavedra/P4/assets/125377500/e31f9235-c5ce-45c0-8654-f04029e95948)
+       ![image](https://github.com/juditsalavedra/P4/assets/125377500/e31f9235-c5ce-45c0-8654-f04029e95948)
       
         En el programa escribimos `$LPC -l 240 -m $lpc_order > $base.lp`
          - `-l`: Longitud de la trama. En nuestro caso 240 muestras.
@@ -191,6 +191,7 @@ ejercicios indicados.
     parametrizadas.
 
    Creamos el script <a href="scripts/plot_coef.py">plot_coef.py</a> a partir de `plot_gmm_feat`, simplificándolo para que no muestre el modelo GMM y se añade un título apropiado para las gráficas:
+  
    ![image](https://github.com/juditsalavedra/P4/assets/125377500/f926e9be-056d-4728-8582-a35dd77a2c89)
 
     
@@ -225,7 +226,8 @@ ejercicios indicados.
 
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
-  Si en valor absoluto los coeficientes de correlación normalizada entre los
+    
+ 	Si en valor absoluto los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor tienen un valor cercano a 1, entonces hay una mayor correlación (ambos coeficientes proporcionan aproximadamente la misma información que uno solo). Por oatro lado, si el valor de rho es cercano a 0, existe una gran incorrelación.
   Los resultados confirman lo que habíamos previsto en las gráficas, los coeficientes MFCC están más incorrelados (el valor de rho es casi 0), seguidos de los LPCC y, por último, los LP tienen una  mayor dependencia (rho es cercano a 1).
   
