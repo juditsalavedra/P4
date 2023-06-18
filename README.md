@@ -342,7 +342,8 @@ Complete el código necesario para realizar verificación del locutor y optimice
 - Adjunte, en el repositorio de la práctica, los ficheros `class_test.log` y `verif_test.log` 
   correspondientes a la evaluación *ciega* final.
 
-	[Class_test](https://github.com/juditsalavedra/P4/blob/Garc%C3%ADa_Salavedra/work/class_test.log)
+	[class_test.log](https://github.com/juditsalavedra/P4/blob/Garc%C3%ADa_Salavedra/work/class_test.log)
+	[verif_test.log](https://github.com/juditsalavedra/P4/blob/Garc%C3%ADa_Salavedra/work/verif_test.log)
 
   
 
