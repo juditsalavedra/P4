@@ -237,7 +237,6 @@ Complete el código necesario para entrenar modelos GMM.
 
 - Inserte una gráfica que muestre la función de densidad de probabilidad modelada por el GMM de un locutor
   para sus dos primeros coeficientes de MFCC.
-  En este caso los coeficientes MFCC comienzan por el
   
   Se muestra la función de densidad de probabilidad modelada por el GMM del locutor 014:
 
