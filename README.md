@@ -190,7 +190,9 @@ ejercicios indicados.
   + Indique **todas** las órdenes necesarias para obtener las gráficas a partir de las señales 
     parametrizadas.
 
-   Creamos el script <a href="scripts/plot_coef.py">plot_coef.py</a> a partir de `plot_gmm_feat`, simplificándolo para que no muestre el modelo GMM y se añade un título apropiado para las gráficas.
+   Creamos el script <a href="scripts/plot_coef.py">plot_coef.py</a> a partir de `plot_gmm_feat`, simplificándolo para que no muestre el modelo GMM y se añade un título apropiado para las gráficas:
+   ![image](https://github.com/juditsalavedra/P4/assets/125377500/f926e9be-056d-4728-8582-a35dd77a2c89)
+
     
     Las órdenes necesarias son las siguientes:
     
@@ -206,7 +208,7 @@ ejercicios indicados.
       
   + ¿Cuál de ellas le parece que contiene más información?
     
-    Parece que contiene más información la gráfica de MFCC puesto que hay una mayor incorrelación, es decir, no se observa una dependencia entre el coeficiente 2 y 3. Sin embargo, para el caso de LP, la gráfica es más parecida a una recta (hay dependencia).
+    Parece que contiene más información la gráfica de la parametrización MFCC, seguida de la parametrización LPCC, puesto que hay una mayor incorrelación, es decir, no se observa una dependencia entre el coeficiente 2 y 3. Sin embargo, para el caso de LP la gráfica es más parecida a una recta (hay dependencia y, por lo tanto, menos información).
 
 - Usando el programa <code>pearson</code>, obtenga los coeficientes de correlación normalizada entre los
   parámetros 2 y 3 para un locutor, y rellene la tabla siguiente con los valores obtenidos.
@@ -223,8 +225,9 @@ ejercicios indicados.
 
   
   + Compare los resultados de <code>pearson</code> con los obtenidos gráficamente.
-    
-  Los resultados confirman lo que habíamos previsto en las gráficas, los coeficientes MFCC están más incorrelados, seguidos de los LPCC y, por último, los LP tienen una  mayor dependencia.
+  Si en valor absoluto los coeficientes de correlación normalizada entre los
+  parámetros 2 y 3 para un locutor tienen un valor cercano a 1, entonces hay una mayor correlación (ambos coeficientes proporcionan aproximadamente la misma información que uno solo). Por oatro lado, si el valor de rho es cercano a 0, existe una gran incorrelación.
+  Los resultados confirman lo que habíamos previsto en las gráficas, los coeficientes MFCC están más incorrelados (el valor de rho es casi 0), seguidos de los LPCC y, por último, los LP tienen una  mayor dependencia (rho es cercano a 1).
   
 - Según la teoría, ¿qué parámetros considera adecuados para el cálculo de los coeficientes LPCC y MFCC?
   
